@@ -3,13 +3,12 @@
 ![Node.js](https://img.shields.io/badge/Node-v22.11.0-brightgreen) 
 ![React](https://img.shields.io/badge/React-18.2.0-blue) 
 ![Estado](https://img.shields.io/badge/Estado-Desarrollo-yellow) 
-![Licencia](https://img.shields.io/badge/Licencia-MIT-lightgrey)
 
 **Hecho Pa'Mi** es una aplicación web de comercio electrónico desarrollada en React, creada como proyecto práctico para el curso de Coder.  
 Inspirada en mi emprendimiento personal, permite a los usuarios explorar productos, agregarlos al carrito y completar compras de forma sencilla e interactiva.  
 
 📸 
-![Captura de pantalla](../proyecto-reactjs/public/img/hecho-pa-mi.png)
+![Captura de pantalla](public/img/hecho-pa-mi.png)
 
 ---
 
