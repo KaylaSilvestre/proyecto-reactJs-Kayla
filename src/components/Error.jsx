@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { IoHomeOutline } from "react-icons/io5";
 
@@ -31,7 +30,7 @@ const Error = () => {
         style={{ maxWidth: "540px", color: "#3b3b3b" }}
       >
         Es posible que la página que buscas se haya movido, eliminado o quizás
-        nunca haya existido. Puedes volves a la página de inicio para seguir
+        nunca haya existido. Puedes volver a la página de inicio para seguir
         navegando.
       </p>
 

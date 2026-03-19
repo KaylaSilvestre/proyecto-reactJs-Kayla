@@ -16,30 +16,42 @@ const ItemCount = (props) => {
     }
   };
 
-  const shop = () => {};
+  const shop = () => {
+    props.onAdd(count);
+  };
 
   return (
-    <div className="mt-3">
-      <div className="d-flex gap-3 align-items-center">
-        {/* Contador */}
-        <div className="input-group" style={{ width: "130px" }}>
-          <button className="btn btn-outline-dark" onClick={restar}>
-            −
-          </button>
+    <>
+      {props.stock > 0 ? (
+        <div className="mt-3">
+          <div className="d-flex gap-3 align-items-center">
+            {/* Contador */}
+            <div className="input-group" style={{ width: "130px" }}>
+              <button className="btn btn-outline-dark" onClick={restar}>
+                −
+              </button>
 
-          <span className="form-control text-center">{count}</span>
+              <span className="form-control text-center">{count}</span>
 
-          <button className="btn btn-outline-dark" onClick={sumar}>
-            +
-          </button>
+              <button className="btn btn-outline-dark" onClick={sumar}>
+                +
+              </button>
+            </div>
+            
+            <button
+              className="btn btn-dark flex-grow-1"
+              disabled={count === 0 || props.stock === 0}
+              onClick={() => props.onAdd(count)}
+            >
+              <FiShoppingCart fontSize={"1rem"} color="white" /> Agregar al
+              carrito
+            </button>
+          </div>
         </div>
-
-        {/*Botón agregar al carrito*/}
-        <button className="btn btn-dark flex-grow-1" onClick={shop}>
-          <FiShoppingCart fontSize={"1rem"} color="white" /> Agregar al carrito
-        </button>
-      </div>
-    </div>
+      ) : (
+        <p>Lo sentimos, en este momento no contamos con este producto.</p>
+      )}
+    </>
   );
 };
 

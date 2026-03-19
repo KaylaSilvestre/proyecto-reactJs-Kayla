@@ -1,29 +1,29 @@
-const productos = [
-  {
-    id: "01",
-    name: "Mate personalizado",
-    description: "Mate de acero totalmente personalizado con grabado laser.",
-    stock: 25,
-    price: 600,
-    category: "souvenirs y regalos",
-    img: "/img/producto-mate.jpg",
-    features: [
-      "Totalmente personalizable",
-      "Acero inoxidable resistente",
-      "Fácil de limpiar",
-    ],
-    tag: "New",
-    reviews: ["⭐⭐⭐⭐⭐ (5.0)"],
-  },
+export const productos = [
+  // {
+  //   id: "01",
+  //   name: "Mate personalizado",
+  //   description: "Mate de acero totalmente personalizado con grabado laser. \nColores disponibles: Blanco, negro, rojo, azul, lila, amarillo, \nverde agua, gris claro, rosado, fucsia.",
+  //   stock: 25,
+  //   price: 600,
+  //   category: "souvenirs-y-regalos",
+  //   img: "/img/producto-mate.jpg",
+  //   features: [
+  //     "Totalmente personalizable",
+  //     "Acero inoxidable resistente",
+  //     "Fácil de limpiar",
+  //   ],
+  //   tag: "New",
+  //   reviews: ["⭐⭐⭐⭐⭐ (5.0)"],
+  // }, //ya se agrego a mano
 
   {
-    id: "02",
+    // id: "02",
     name: "Llavero souvenir MDF",
     description:
       "LLavero souvenir de MDF totalmente personalizado con grabado laser. \nIdeal para cumpleaños, baby shower, casamientos, etc.  \nMedida aproximada: 5cm. ",
     stock: 200,
     price: 45,
-    category: "souvenirs y regalos",
+    category: "souvenirs-y-regalos",
     img: "/img/producto-llavero.jpg",
     features: [
       "MDF resistente y liviano",
@@ -35,7 +35,7 @@ const productos = [
   },
 
   {
-    id: "03",
+    // id: "03",
     name: "Stickers",
     description:
       "Stickers impermeables totalmente personalizados. \nEl precio es por un pack de 4 stickers de hasta 5x5 cm.",
@@ -53,7 +53,7 @@ const productos = [
   },
 
   {
-    id: "04",
+    // id: "04",
     name: "Pantalla MDF",
     description: "Pantalla de techo de MDF, diseños a medida.",
     stock: 5,
@@ -70,13 +70,13 @@ const productos = [
   },
 
   {
-    id: "05",
+    // id: "05",
     name: "Vaso personalizado",
     description:
-      "Vaso térmico de acero inoxidable totalmente personalizado con grabado laser.",
+      "Vaso térmico de acero inoxidable totalmente personalizado con grabado laser. \nCapacidad de 750 ml. \nColores disponibles: Blanco, negro, gris, amarillo, verde agua, rosado, fucsia, azul.",
     stock: 10,
     price: 600,
-    category: "souvenirs y regalos",
+    category: "souvenirs-y-regalos",
     img: "/img/producto-vaso.jpg",
     features: [
       "Personalización detallada con grabado láser",
@@ -88,12 +88,12 @@ const productos = [
   },
 
   {
-    id: "06",
+    // id: "06",
     name: "Placa personalizada",
-    description: "Placa para mascota personalizada.",
+    description: "Placa para mascota personalizada. \nMedidas aproximadas de 4cm x 2.7cm. \nColores disponibles: Plateado, negro, azul, rojo, violeta, verde.",
     stock: 51,
     price: 300,
-    category: "souvenirs y regalos",
+    category: "souvenirs-y-regalos",
     img: "/img/producto-dije.jpg",
     features: [
       "Personalización detallada con grabado láser",
@@ -105,12 +105,12 @@ const productos = [
   },
 
   {
-    id: "07",
+    // id: "07",
     name: "Caja de te MDF",
     description: "Caja para te de MDF personalizada con grabado laser.",
     stock: 5,
     price: 450,
-    category: "souvenirs y regalos",
+    category: "souvenirs-y-regalos",
     img: "/img/producto-caja-te.jpg",
     features: [
       "MDF resistente y duradero",
@@ -122,9 +122,9 @@ const productos = [
   },
 
   {
-    id: "08",
+    // id: "08",
     name: "Vinilo decorativo",
-    description: "Vinilo decorativo para autos, motos, vidrios o casa.",
+    description: "Vinilo decorativo para autos, motos, vidrios o casa. \nLa medida aproximada es de 15cm x 7cm.",
     stock: 242,
     price: 300,
     category: "stickers",

@@ -1,0 +1,32 @@
+.compra-card {
+  width: 380px;
+  border-radius: 12px;
+}
+
+.icon-circle {
+  width: 60px;
+  height: 60px;
+  background-color: #f8d7da;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.check {
+  color: #dc3545;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.letter-spacing {
+  letter-spacing: 2px;
+}
+
+.link {
+  cursor: pointer;
+}
+
+.link:hover {
+  text-decoration: underline;
+}

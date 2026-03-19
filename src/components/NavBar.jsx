@@ -33,17 +33,15 @@ const NavBar = () => {
               <NavDropdown.Item as={NavLink} to="/category/stickers">
                 Stickers
               </NavDropdown.Item>
-              <NavDropdown.Item as={NavLink} to="/category/souvenirs y regalos">
+              <NavDropdown.Item as={NavLink} to="/category/souvenirs-y-regalos">
                 Souvenirs y regalos
               </NavDropdown.Item>
               <NavDropdown.Item as={NavLink} to="/category/decoracion">
                 Decoración
               </NavDropdown.Item>
-              <NavDropdown.Item as={NavLink} to="/category/impresion 3D">
+              <NavDropdown.Item as={NavLink} to="/category/impresion-3D">
                 Impresión 3D
               </NavDropdown.Item>
-              {/* <NavDropdown.Divider />
-              <NavDropdown.Item as={NavLink} to="/category/todos los productos">Todos los productos</NavDropdown.Item> */}
             </NavDropdown>
 
             <Nav.Link as={NavLink} to="/contacto" className="text-dark">

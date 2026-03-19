@@ -1,4 +1,3 @@
-import React from "react";
 import Item from "./Item";
 
 const ItemList = ({ data }) => {
@@ -6,10 +5,10 @@ const ItemList = ({ data }) => {
     <div
       style={{
         display: "flex",
-        justifyContent: "space-around",
+        justifyContent: "center",
         alignItems: "center",
         flexWrap: "wrap",
-        gap: "15px",
+        gap: "30px",
       }}
     >
       {data.map((prod) => (

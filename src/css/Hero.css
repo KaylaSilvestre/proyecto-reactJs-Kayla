@@ -48,7 +48,7 @@
   font-weight: 700;
   text-align: start;
   color: rgb(56, 55, 55);
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
 .hero-category-title::first-letter {
@@ -63,3 +63,4 @@
   text-align: start;
   margin-bottom: 0rem;
 }
+

@@ -1,11 +1,27 @@
-import React from "react";
+import { useState, useContext } from "react";
 import ItemCount from "./ItemCount";
 import { LiaTruckSolid } from "react-icons/lia";
 import { RiSecurePaymentLine } from "react-icons/ri";
 import { MdOutlinePublishedWithChanges } from "react-icons/md";
 import { FaCheck } from "react-icons/fa6";
+import { Link } from "react-router-dom";
+import { CartContext } from "../context/CartContext";
 
 const ItemDetail = ({ detail }) => {
+  const [purchase, setPurchase] = useState(false);
+  const { cart, addItem, itemQty } = useContext(CartContext);
+  const [showAlert, setShowAlert] = useState(false);
+  const [selectedQuantity, setSelectedQuantity] = useState(0); //Guardo la cantiddad
+
+  const onAdd = (cantidad) => {
+    setShowAlert(true);
+    addItem(detail, cantidad);
+    setPurchase(true);
+    setSelectedQuantity(cantidad);
+  };
+
+  const stockDisponible = detail.stock - itemQty(detail.id); //Calculo el stock disponible restando la cantidad en el carrito
+
   return (
     <div className="container py-5">
       <div className="row g-5">
@@ -31,10 +47,8 @@ const ItemDetail = ({ detail }) => {
           </p>
 
           {/*Resenias*/}
-          <div className="mb-3">
-            {detail.reviews}
-          </div>
- 
+          <div className="mb-3">{detail.reviews}</div>
+
           <h4 className="fw-bold mb-3">${detail.price}.00</h4>
 
           <hr />
@@ -58,10 +72,22 @@ const ItemDetail = ({ detail }) => {
           </ul>
 
           <p className="text-success small">
-            ● En stock ({detail.stock} disponibles)
+            ● En stock ({stockDisponible} disponibles)
           </p>
 
-          <ItemCount stock={detail.stock} />
+          {purchase ? (
+            <Link className="btn btn-success mt-3" to="/cart">
+              Ir al carrito
+            </Link>
+          ) : (
+            <ItemCount stock={stockDisponible} onAdd={onAdd} />
+          )}
+
+          {showAlert && (
+            <div className="alert alert-success mt-3">
+              Agregaste {selectedQuantity} unidades de {detail.name} al carrito
+            </div>
+          )}
 
           <hr className="mt-4" />
 

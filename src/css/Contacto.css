@@ -1,0 +1,40 @@
+.contact-card {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #eee;
+}
+
+.contact-card input,
+.contact-card textarea,
+.contact-card select {
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.contact-card button {
+  border-radius: 8px;
+  padding: 12px;
+  font-weight: 500;
+}
+
+/* INFO DERECHA */
+.info-card {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  background: #fff;
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid #eee;
+}
+
+.icon {
+  color: #dc3545;
+  font-size: 20px;
+}
