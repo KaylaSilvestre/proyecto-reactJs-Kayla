@@ -72,13 +72,6 @@ const Checkout = () => {
   return (
     <>
       {orderId ? (
-        // <div className="text-center my-5">
-        //   <h2>Muchas gracias por tu compra! 🥳</h2>
-        //   <h3>Su orden es: {orderId}</h3>
-        //   <Link className="btn btn-dark" to="/">
-        //     Volver a Home
-        //   </Link>
-        // </div>
         <div>
           <CompraConfirm orderId={orderId} buyer={buyer} />
         </div>

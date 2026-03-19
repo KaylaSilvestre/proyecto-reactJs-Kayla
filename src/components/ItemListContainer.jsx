@@ -37,13 +37,6 @@ const ItemListContainer = (props) => {
       .finally(() => setLoading(false));
   }, [type]);
 
-  // //Subir productos a firebase
-  // const subirProd = ()=> {
-  //   console.log('subiendo data')
-  //   const collASubir = collection(db, "productos")
-  //   productos.map((prod)=> addDoc(collASubir, prod))
-  // }
-
   return (
     <>
       {loading ? (

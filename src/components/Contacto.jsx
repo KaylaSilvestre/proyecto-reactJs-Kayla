@@ -87,7 +87,7 @@ const Contacto = () => {
                   Completa el formulario y te responderemos dentro de 24 horas.
                 </p>
 
-                {error && <p className="text-danger">{error}</p>}
+                {error && <div className="alert alert-danger">{error}</div>}
 
                 <form onSubmit={enviarConsulta}>
                   <Row>
@@ -129,7 +129,7 @@ const Contacto = () => {
                         type="text"
                         name="phone"
                         className="form-control mb-3"
-                        placeholder="+598 1234 5678"
+                        placeholder="092 123 456"
                         value={contact.phone || ""}
                         onChange={contactData}
                       />
@@ -199,7 +199,7 @@ const Contacto = () => {
                   <FaPhone className="icon" />
                   <div>
                     <h6>Teléfono</h6>
-                    <p>+598 91 507 106</p>
+                    <p>+598 091 507 106</p>
                   </div>
                 </div>
 

@@ -10,9 +10,6 @@ const ItemDetailContainer = () => {
   const [detail, setDetail] = useState({});
   const [loading, setLoading] = useState(true);
   const [invalid, setInvalid] = useState(null);
-  // const param =useParams()
-  // console.log(param)
-
   const { id } = useParams();
 
   console.log(id);
