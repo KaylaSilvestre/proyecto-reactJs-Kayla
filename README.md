@@ -24,9 +24,23 @@ Sigue estos pasos para correr el proyecto en tu máquina local:
 ⚠️ **Importante:** Este proyecto utiliza **variables de entorno**, así que asegurate de configurarlas antes de ejecutar la app.
 
 Para poder ejecutar la app, quien clone el proyecto deberá:  
-1. Crear un archivo llamado `.env` en la raíz del proyecto.  
-2. Agregar las variables necesarias (por ejemplo, las claves de Firebase).  
-3. No subir este archivo a repositorios públicos, ya que contiene información sensible.
+1. Crear un archivo llamado `.env` en la raíz del proyecto.
+2. Agregar las variables necesarias.  
+
+### Ejemplo de variables (tomadas de `.env.example`)
+
+```
+VITE_API_KEY=xxxx
+VITE_AUTH_DOMAIN=xxxx
+VITE_PROJECT_ID=xxxx
+VITE_STORAGE_BUCKET=xxxx
+VITE_MESSAGING_SENDER_ID=xxxx
+VITE_APP_ID=xxxx
+```
+
+> 💡 Reemplazá cada xxxx por tus valores reales de Firebase.
+
+> No subir este archivo a repositorios públicos, ya que contiene información sensible.
 
 ## 📝 Requisitos 
 
