@@ -7,59 +7,53 @@ import ContactoHero from "../components/ContactoHero";
 import "../css/Contacto.css";
 import { Link } from "react-router-dom";
 
+// React Hook Form y Yup
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+// Schema de validación
+const schema = yup.object().shape({
+  name: yup
+    .string()
+    .required("El nombre es obligatorio")
+    .matches(/^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/, "El nombre solo puede tener letras")
+    .min(3, "El nombre debe tener al menos 3 letras"),
+  email: yup.string().email("Email inválido").required("El email es obligatorio"),
+  phone: yup
+    .string()
+    .required("El teléfono es obligatorio")
+    .matches(/^\d{7,15}$/, "El teléfono debe tener solo números (7 a 15 dígitos)"),
+  subject: yup.string().required("Elige un asunto"),
+  message: yup.string().required("El mensaje es obligatorio").min(10, "El mensaje debe tener al menos 10 caracteres"),
+});
 
 const Contacto = () => {
   const [contact, setContact] = useState({});
   const [contactId, setContactId] = useState("");
-  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const contactData = (e) => {
-    setContact({
-      ...contact,
-      [e.target.name]: e.target.value,
-    });
-  };
+  // React Hook Form
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
-  const enviarConsulta = (e) => {
-    e.preventDefault();
-
-    if (
-      !contact.name ||
-      !contact.email ||
-      !contact.phone ||
-      !contact.subject ||
-      !contact.message
-    ) {
-      setError("Por favor completa todos los campos");
-    } else {
-      setError(null);
-      setLoading(true);
-
-      let newContact = {
-        contacto: contact,
-        fecha: serverTimestamp(),
-      };
-
-      //creamos ref
+  const enviarConsulta = async (data) => {
+    setLoading(true);
+    try {
       const contactColl = collection(db, "contactos");
-
-      //agrego al doc
-      addDoc(contactColl, newContact)
-        .then((res) => {
-          setContactId(res.id);
-
-          //limpio form
-          setContact({
-            name: "",
-            email: "",
-            phone: "",
-            subject: "",
-            message: "",
-          });
-        })
-        .catch((error) => console.log(error))
-        .finally(() => setLoading(false));
+      const res = await addDoc(contactColl, { contacto: data, fecha: serverTimestamp() });
+      setContactId(res.id);
+      reset(); // limpia el formulario
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -69,13 +63,13 @@ const Contacto = () => {
 
       {contactId ? (
         <div className="d-flex flex-column align-items-center justify-content-center text-center my-5 py-5">
-    <h2 className="mb-3">¡Mensaje enviado! 📩</h2>
-    <p className="mb-2">Tu número de consulta es:</p>
-    <strong className="mb-3">{contactId}</strong>
-    <Link className="btn btn-dark mt-3 px-4" to="/">
-      Volver a Home
-    </Link>
-  </div>
+          <h2 className="mb-3">¡Mensaje enviado! 📩</h2>
+          <p className="mb-2">Tu número de consulta es:</p>
+          <strong className="mb-3">{contactId}</strong>
+          <Link className="btn btn-dark mt-3 px-4" to="/">
+            Volver a Home
+          </Link>
+        </div>
       ) : (
         <Container className="my-5">
           <Row>
@@ -87,9 +81,7 @@ const Contacto = () => {
                   Completa el formulario y te responderemos dentro de 24 horas.
                 </p>
 
-                {error && <div className="alert alert-danger">{error}</div>}
-
-                <form onSubmit={enviarConsulta}>
+                <form onSubmit={handleSubmit(enviarConsulta)}>
                   <Row>
                     <Col md={6}>
                       <label>
@@ -97,12 +89,11 @@ const Contacto = () => {
                       </label>
                       <input
                         type="text"
-                        name="name"
-                        className="form-control mb-3"
+                        className="form-control mb-1"
                         placeholder="Juan Pérez"
-                        value={contact.name || ""}
-                        onChange={contactData}
+                        {...register("name")}
                       />
+                      <p className="text-danger">{errors.name?.message}</p>
                     </Col>
 
                     <Col md={6}>
@@ -111,12 +102,11 @@ const Contacto = () => {
                       </label>
                       <input
                         type="email"
-                        name="email"
-                        className="form-control mb-3"
+                        className="form-control mb-1"
                         placeholder="correo@email.com"
-                        value={contact.email || ""}
-                        onChange={contactData}
+                        {...register("email")}
                       />
+                      <p className="text-danger">{errors.email?.message}</p>
                     </Col>
                   </Row>
 
@@ -127,12 +117,11 @@ const Contacto = () => {
                       </label>
                       <input
                         type="text"
-                        name="phone"
-                        className="form-control mb-3"
+                        className="form-control mb-1"
                         placeholder="092 123 456"
-                        value={contact.phone || ""}
-                        onChange={contactData}
+                        {...register("phone")}
                       />
+                      <p className="text-danger">{errors.phone?.message}</p>
                     </Col>
 
                     <Col md={6}>
@@ -140,20 +129,17 @@ const Contacto = () => {
                         Asunto <span className="required">*</span>
                       </label>
                       <select
-                        name="subject"
-                        className="form-control mb-3"
-                        value={contact.subject || ""}
-                        onChange={contactData}
+                        className="form-control mb-1"
+                        {...register("subject")}
                       >
                         <option value="">Seleccionar asunto</option>
                         <option value="pedido">Consulta sobre un pedido</option>
-                        <option value="producto">
-                          Consulta sobre un producto
-                        </option>
+                        <option value="producto">Consulta sobre un producto</option>
                         <option value="envio">Envíos</option>
                         <option value="pago">Problemas con el pago</option>
                         <option value="otro">Otro</option>
                       </select>
+                      <p className="text-danger">{errors.subject?.message}</p>
                     </Col>
                   </Row>
 
@@ -161,13 +147,12 @@ const Contacto = () => {
                     Mensaje <span className="required">*</span>
                   </label>
                   <textarea
-                    name="message"
-                    className="form-control mb-3"
+                    className="form-control mb-1"
                     rows="4"
                     placeholder="¿En qué podemos ayudarte?"
-                    value={contact.message || ""}
-                    onChange={contactData}
+                    {...register("message")}
                   ></textarea>
+                  <p className="text-danger">{errors.message?.message}</p>
 
                   <button className="btn btn-dark w-100" disabled={loading}>
                     {loading ? "Enviando..." : "Enviar mensaje"}

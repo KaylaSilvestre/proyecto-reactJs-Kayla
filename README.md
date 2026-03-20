@@ -43,6 +43,8 @@ Si deseas ver el proyecto online, puedes utilizar el siguiente link [Hecho Pa'Mi
 - [React Router DOM](https://reactrouter.com/) Navegación entre rutas de la app.
 - [Firebase](https://firebase.google.com/?hl=es-419) Base de datos y almacenamiento en la nube.
 - [SweetAlert](https://sweetalert.js.org/) Alertas y notificaciones interactivas al usuario.
+- [React Hook Form](https://react-hook-form.com/) Manejo de formularios y validaciones.
+- [Yup](Yup) Validaciones avanzadas de formularios.
 
 🧑‍💻  Desarrollado por Kay 💖
 

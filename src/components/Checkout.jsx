@@ -9,60 +9,73 @@ import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate, Link } from "react-router-dom";
 import CompraConfirm from "./CompraConfirm";
 
+// Import React Hook Form y Yup
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+// Schema de validación con Yup (nombre y apellido mínimo 3 letras y solo letras)
+const schema = yup.object().shape({
+  name: yup
+    .string()
+    .required("El nombre es obligatorio")
+    .matches(/^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/, "El nombre solo puede tener letras")
+    .min(3, "El nombre debe tener al menos 3 letras"),
+  
+  lastname: yup
+    .string()
+    .required("El apellido es obligatorio")
+    .matches(/^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/, "El apellido solo puede tener letras")
+    .min(3, "El apellido debe tener al menos 3 letras"),
+  
+  address: yup.string().required("La dirección es obligatoria"),
+  
+  email: yup.string().email("Email inválido").required("El email es obligatorio"),
+  
+  validMail: yup
+    .string()
+    .oneOf([yup.ref("email")], "Los emails deben coincidir")
+    .required("Por favor repite tu email"),
+});
+
 const Checkout = () => {
-  const [buyer, setBuyer] = useState({});
-  const [validMail, setValidMail] = useState("");
-  const [orderId, setOrderId] = useState("");
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
   const { cart, total, envio, clearCart } = useContext(CartContext);
+  const [orderId, setOrderId] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const buyerData = (e) => {
-    setBuyer({
-      ...buyer,
-      [e.target.name]: e.target.value,
-    });
-  };
+  // React Hook Form
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
-  console.log(buyer);
-  const finalizarCompra = (e) => {
-    //Para que no recargue todo
-    e.preventDefault();
-    //validar
-    if (
-      !buyer.name ||
-      !buyer.lastname ||
-      !buyer.address ||
-      !buyer.email ||
-      !validMail
-    ) {
-      setError("Por favor completa todos los campos");
-    } else if (buyer.email !== validMail) {
-      setError("Verificá que ambos correos sean iguales");
-    } else {
-      setError(null);
-      setLoading(true);
-      let order = {
-        comprador: buyer,
-        compras: cart,
-        total: total() + envio(),
-        fecha: serverTimestamp(),
-      };
+  const finalizarCompra = (data) => {
+    setLoading(true);
+    let order = {
+      comprador: {
+        name: data.name,
+        lastname: data.lastname,
+        address: data.address,
+        email: data.email,
+      },
+      compras: cart,
+      total: total() + envio(),
+      fecha: serverTimestamp(),
+    };
 
-      //Creamos ref
-      const orderColl = collection(db, "orders");
+    const orderColl = collection(db, "orders");
 
-      //Agrego el doc
-      addDoc(orderColl, order)
-        .then((res) => {
-          setOrderId(res.id);
-          //Borramos carrito
-          clearCart();
-        })
-        .catch((error) => console.log(error))
-        .finally(() => setLoading(false));
-    }
+    addDoc(orderColl, order)
+      .then((res) => {
+        setOrderId(res.id);
+        clearCart();
+      })
+      .catch((error) => console.log(error))
+      .finally(() => setLoading(false));
   };
 
   if (!cart.length && !orderId) {
@@ -72,9 +85,7 @@ const Checkout = () => {
   return (
     <>
       {orderId ? (
-        <div>
-          <CompraConfirm orderId={orderId} buyer={buyer} />
-        </div>
+        <CompraConfirm orderId={orderId} buyer={{}} />
       ) : (
         <div className="container checkout-page mt-5">
           <Link
@@ -86,26 +97,23 @@ const Checkout = () => {
 
           <h2 className="text-center mb-3">Checkout</h2>
 
-          {/* Formulario */}
           <div className="card shadow-sm p-4">
             <h5 className="mb-3 d-flex align-items-center gap-2">
               <LuUserRound />
               Información de contacto
             </h5>
 
-            {error && <div className="alert alert-danger">{error}</div>}
-
-            <form onSubmit={finalizarCompra}>
+            <form onSubmit={handleSubmit(finalizarCompra)}>
               <div className="row">
                 <div className="col-md-6 mb-3">
                   <label style={{ fontWeight: "600" }}>
                     Nombre <span className="required">*</span>
                   </label>
                   <input
-                    name="name"
                     className="form-control"
-                    onChange={buyerData}
+                    {...register("name")}
                   />
+                  <p className="text-danger">{errors.name?.message}</p>
                 </div>
 
                 <div className="col-md-6 mb-3">
@@ -113,10 +121,10 @@ const Checkout = () => {
                     Apellido <span className="required">*</span>
                   </label>
                   <input
-                    name="lastname"
                     className="form-control"
-                    onChange={buyerData}
+                    {...register("lastname")}
                   />
+                  <p className="text-danger">{errors.lastname?.message}</p>
                 </div>
               </div>
 
@@ -125,10 +133,10 @@ const Checkout = () => {
                   Dirección <span className="required">*</span>
                 </label>
                 <input
-                  name="address"
                   className="form-control"
-                  onChange={buyerData}
+                  {...register("address")}
                 />
+                <p className="text-danger">{errors.address?.message}</p>
               </div>
 
               <div className="mb-3">
@@ -137,10 +145,10 @@ const Checkout = () => {
                 </label>
                 <input
                   type="email"
-                  name="email"
                   className="form-control"
-                  onChange={buyerData}
+                  {...register("email")}
                 />
+                <p className="text-danger">{errors.email?.message}</p>
               </div>
 
               <div className="mb-3">
@@ -150,11 +158,12 @@ const Checkout = () => {
                 <input
                   type="email"
                   className="form-control"
-                  onChange={(e) => setValidMail(e.target.value)}
+                  {...register("validMail")}
                 />
+                <p className="text-danger">{errors.validMail?.message}</p>
               </div>
 
-              <div className="d-flex justify-content-between mt-4 ">
+              <div className="d-flex justify-content-between mt-4">
                 <button
                   type="submit"
                   className="btn btn-dark d-flex align-items-center gap-2"
