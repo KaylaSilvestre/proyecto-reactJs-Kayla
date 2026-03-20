@@ -98,8 +98,6 @@ const CartView = () => {
                     }).then((result) => {
                       if (result.isConfirmed) {
                         clearCart();
-
-                        Swal.fire("Listo", "El carrito fue vaciado", "success");
                       }
                     });
                   }}
