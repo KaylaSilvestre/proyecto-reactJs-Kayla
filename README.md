@@ -40,7 +40,7 @@ VITE_APP_ID=xxxx
 
 > 💡 Reemplazá cada xxxx por tus valores reales de Firebase.
 
-> No subir este archivo a repositorios públicos, ya que contiene información sensible.
+No subir este archivo a repositorios públicos, ya que contiene información sensible.
 
 ## 📝 Requisitos 
 
