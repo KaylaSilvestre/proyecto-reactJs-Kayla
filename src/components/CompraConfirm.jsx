@@ -26,10 +26,6 @@ const CompraConfirm = ({ orderId, buyer }) => {
           <p className="fw-bold mb-0">{orderId}</p>
         </div>
 
-        <p className="text-muted small mt.2">
-          Correo al que nos comunicaremos: <strong>{buyer?.email}</strong>
-        </p>
-
         <Link to="/" className="btn btn-dark mb-2 w-100 text-decoration-none">
           Volver al inicio
         </Link>

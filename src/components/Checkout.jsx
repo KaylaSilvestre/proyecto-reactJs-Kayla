@@ -8,13 +8,10 @@ import { LuUserRound } from "react-icons/lu";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate, Link } from "react-router-dom";
 import CompraConfirm from "./CompraConfirm";
-
-// Import React Hook Form y Yup
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-// Schema de validación con Yup (nombre y apellido mínimo 3 letras y solo letras)
 const schema = yup.object().shape({
   name: yup
     .string()

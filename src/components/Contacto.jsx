@@ -6,13 +6,10 @@ import { FaMapMarkerAlt, FaEnvelope, FaPhone, FaClock } from "react-icons/fa";
 import ContactoHero from "../components/ContactoHero";
 import "../css/Contacto.css";
 import { Link } from "react-router-dom";
-
-// React Hook Form y Yup
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-// Schema de validación
 const schema = yup.object().shape({
   name: yup
     .string()
