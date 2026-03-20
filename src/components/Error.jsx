@@ -3,7 +3,10 @@ import { IoHomeOutline } from "react-icons/io5";
 
 const Error = () => {
   return (
-    <div className="container text-center position-relative py-5">
+
+        <div className="cart-page-container">
+      <main className="cart-main-content container mt-5">
+    <div className="d-flex flex-column justify-content-center align-items-center flex-grow-1 text-center py-5">
       {/* Label */}
       <p
         className="text-uppercase fw-semibold mb-3"
@@ -45,6 +48,8 @@ const Error = () => {
           Volver al inicio
         </Link>
       </div>
+      </div>
+      </main>
     </div>
   );
 };

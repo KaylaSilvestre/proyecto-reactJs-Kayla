@@ -82,7 +82,7 @@ const CartView = () => {
                 <Link to="/checkout" className="btn checkout-btn w-100 mt-3">
                   Terminar compra
                 </Link>
-                
+
                 <button
                   className="btn btn-outline-danger w-100 mt-2"
                   onClick={() => {
