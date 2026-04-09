@@ -12,6 +12,8 @@ import CartContainer from "./components/CartContainer";
 import Checkout from "./components/Checkout";
 import Contacto from "./components/Contacto"; 
 import Footer from "./components/Footer";
+import CargarProductos from "./components/CargarProductos"
+
 
 function App() {
   return (
