@@ -1,48 +1,111 @@
 // import { useState, useContext, useEffect } from "react";
 // import ItemCount from "./ItemCount";
+// import { FaCheck } from "react-icons/fa6";
+// import { CartContext } from "../context/CartContext";
 // import { LiaTruckSolid } from "react-icons/lia";
 // import { RiSecurePaymentLine } from "react-icons/ri";
 // import { MdOutlinePublishedWithChanges } from "react-icons/md";
-// import { FaCheck } from "react-icons/fa6";
-// import { Link } from "react-router-dom";
-// import { CartContext } from "../context/CartContext";
 
 // const ItemDetail = ({ detail }) => {
-//   const [purchase, setPurchase] = useState(false);
 //   const { addItem, itemQty } = useContext(CartContext);
-//   const [showAlert, setShowAlert] = useState(false);
-//   const [selectedQuantity, setSelectedQuantity] = useState(0);
+
 //   const [selectedImage, setSelectedImage] = useState("");
 //   const [selectedOption, setSelectedOption] = useState(null);
+//   const [selectedColor, setSelectedColor] = useState(null);
+//   const [customText, setCustomText] = useState("");
+
+//   const [selectedQuantity, setSelectedQuantity] = useState(0);
+//   const [showAlert, setShowAlert] = useState(false);
+
+//   const [errorOption, setErrorOption] = useState(false);
+//   const [errorColor, setErrorColor] = useState(false);
+//   const [errorText, setErrorText] = useState(false);
+
+//   const hasOptions = detail.options?.length > 0;
+
+//   const colorMap = {
+//     rojo: "#ff0000",
+//     negro: "#000000",
+//     blanco: "#ffffff",
+//     azul: "#0000ff",
+//     verde: "#00ff00",
+//     amarillo: "#ffff00",
+//     rosa: "#ffc0cb",
+//     rosado: "#ffc0cb",
+//     violeta: "#8a2be2",
+//     naranja: "#ffa500",
+//     gris: "#808080",
+//   };
 
 //   useEffect(() => {
 //     setSelectedImage(detail.img);
-//     setSelectedOption(detail.options?.[0] || null); // selecciona la primera opción por defecto
+//     setSelectedOption(null);
+//     setSelectedColor(null);
+//     setCustomText("");
 //   }, [detail]);
 
+//   const stockDisponible = detail.stock - itemQty(detail.id);
+
 //   const onAdd = (cantidad) => {
+//     let hasError = false;
+
+//     if (hasOptions && !selectedOption) {
+//       setErrorOption(true);
+//       hasError = true;
+//     } else {
+//       setErrorOption(false);
+//     }
+
+//     const availableColors = selectedOption?.colors || detail.colors || [];
+
+//     if (availableColors.length > 0 && !selectedColor) {
+//       setErrorColor(true);
+//       hasError = true;
+//     } else {
+//       setErrorColor(false);
+//     }
+
+//     if (detail.customText && !customText.trim()) {
+//       setErrorText(true);
+//       hasError = true;
+//     } else {
+//       setErrorText(false);
+//     }
+
+//     if (hasError) return;
+
+//     const itemToAdd = {
+//       ...detail,
+//       selectedOption,
+//       selectedColor,
+//       selectedImg: selectedImage,
+//       customText: customText.trim(),
+//     };
+
+//     addItem(itemToAdd, cantidad);
 //     setShowAlert(true);
-//     addItem(
-//       {
-//         ...detail,
-//         selectedImg: selectedOption?.img, // la imagen de la opción elegida
-//         selectedOption, // guardamos el nombre/datos de la opción
-//       },
-//       cantidad
-//     );
-//     setPurchase(true);
 //     setSelectedQuantity(cantidad);
 //   };
 
-//   const stockDisponible = detail.stock - itemQty(detail.id);
+//   const handleOptionChange = (option) => {
+//     setSelectedOption(option);
+//     setErrorOption(false);
+
+//     if (option?.img) setSelectedImage(option.img);
+
+//     setSelectedColor(null);
+//     setErrorColor(false);
+//   };
+
+//   const availableColors = selectedOption?.colors || detail.colors || [];
 
 //   return (
 //     <div className="container py-5">
 //       <div className="row g-5">
-//         {/* Foto principal */}
+//         {/* IMAGEN */}
 //         <div className="col-md-6">
 //           <div
-//             className="border rounded d-flex align-items-center justify-content-center mb-3 overflow-hidden"
+//             className="border rounded d-flex align-items-center justify-content-center mb-3"
 //             style={{ height: "450px", backgroundColor: "#f5f5f5" }}
 //           >
 //             <img
@@ -52,41 +115,49 @@
 //               style={{ maxHeight: "100%", objectFit: "contain" }}
 //             />
 //           </div>
-
-//           {/* Miniaturas */}
-//           <div className="d-flex gap-2 flex-wrap">
-//             {[detail.img, ...(detail.images || [])].map((foto, index) => (
-//               <img
-//                 key={index}
-//                 src={foto}
-//                 alt={`${detail.name} ${index + 1}`}
-//                 className={`rounded p-1 shadow-sm ${
-//                   selectedImage === foto
-//                     ? "border border-2 border-dark"
-//                     : "border border-light"
-//                 }`}
-//                 style={{
-//                   width: "80px",
-//                   height: "80px",
-//                   objectFit: "cover",
-//                   cursor: "pointer",
-//                 }}
-//                 onClick={() => setSelectedImage(foto)}
-//               />
-//             ))}
-//           </div>
 //         </div>
 
-//         {/* Información del producto */}
-//         <div className="col-md-6">
-//           <p className="text-uppercase text-muted small mb-2">{detail.category}</p>
+//         {/* Miniaturas */}
+//           <div className="d-flex gap-2 flex-wrap">
+//              {[detail.img, ...(detail.images || [])].map((foto, index) => (
+//        <img
+//            key={index}
+//             src={foto}
+//             alt={`${detail.name} ${index + 1}`}
+//             className={`rounded p-1 shadow-sm ${
+//               selectedImage === foto
+//                  ? "border border-2 border-dark"
+//                    : "border border-light"
+//                }`}
+//                style={{
+//                  width: "80px",
+//                   height: "80px",
+//                    objectFit: "cover",
+//                   cursor: "pointer",
+//                 }}
+//                  onClick={() => setSelectedImage(foto)}
+//               />
+//              ))}
+//            </div>
+//          </div>
 
+
+//         {/* INFO */}
+//         <div className="col-md-6">
+//           {/* CATEGORIA */}
+//           <p className="text-uppercase text-muted small mb-2">
+//             {detail.category}
+//           </p>
+
+//           {/* NOMBRE */}
 //           <p className="fw-bold" style={{ fontSize: "1.8rem" }}>
 //             {detail.name}
 //           </p>
 
+//           {/* RATING */}
 //           <div className="mb-3">{detail.reviews}</div>
 
+//           {/* PRECIO DESTACADO */}
 //           <h4 className="fw-bold mb-3">${detail.price}.00</h4>
 
 //           <hr />
@@ -97,62 +168,135 @@
 //             </p>
 //           )}
 
-//           {/* Características */}
-//           <h6 className="fw-bold mt-4">Características</h6>
+//           {/* FEATURES */}
+//           <h6 className="fw-bold mt-3">Características</h6>
 //           <ul className="list-unstyled">
-//             {detail.features?.map((feature, index) => (
-//               <li key={index} className="mb-1">
-//                 <FaCheck /> {feature}
+//             {detail.features?.map((f, i) => (
+//               <li key={i}>
+//                 <FaCheck /> {f}
 //               </li>
 //             ))}
 //           </ul>
 
-//           <p className="text-success small">● En stock ({stockDisponible} disponibles)</p>
+//           <p className="text-success small">
+//             ● En stock ({stockDisponible} disponibles)
+//           </p>
 
-//           {/* Selector de opciones */}
-//           {detail.options && (
-//             <div className="mt-3">
-//               <h6 className="fw-bold">Elige tu diseño:</h6>
-//               <div className="d-flex flex-wrap gap-2">
-//                 {detail.options.map((option, index) => (
-//                   <div
-//                     key={index}
-//                     className={`border rounded p-2 text-center ${
-//                       selectedOption?.name === option.name
-//                         ? "border-dark"
-//                         : "border-light"
-//                     }`}
-//                     style={{ cursor: "pointer", width: "80px" }}
-//                     onClick={() => {
-//                       setSelectedOption(option);
-//                       setSelectedImage(option.img);
-//                     }}
-//                   >
-//                     <img
-//                       src={option.img}
-//                       alt={option.name}
-//                       className="img-fluid mb-1"
-//                       style={{ height: "60px", objectFit: "cover" }}
-//                     />
-//                     <small>{option.name}</small>
-//                   </div>
+//           {/* MODELO */}
+//           {hasOptions && (
+//             <div className="mb-3">
+//               <label className="fw-bold">Modelo:</label>
+
+//               <select
+//                 className="form-select"
+//                 value={selectedOption?.name || ""}
+//                 onChange={(e) => {
+//                   const opt = detail.options.find(
+//                     (o) => o.name === e.target.value,
+//                   );
+//                   handleOptionChange(opt);
+//                 }}
+//               >
+//                 <option value="">Seleccionar modelo</option>
+//                 {detail.options.map((opt, i) => (
+//                   <option key={i} value={opt.name}>
+//                     {opt.name}
+//                   </option>
 //                 ))}
-//               </div>
+//               </select>
+
+//               {errorOption && (
+//                 <small className="text-danger">
+//                   Debes seleccionar un modelo
+//                 </small>
+//               )}
 //             </div>
 //           )}
 
-//           {/* Contador y agregar al carrito */}
-//           {purchase ? (
-//             <Link className="btn btn-success mt-3" to="/cart">
-//               Ir al carrito
-//             </Link>
-//           ) : (
-//             <ItemCount stock={stockDisponible} onAdd={onAdd} />
+//           {/* COLOR */}
+//           {availableColors.length > 0 && (
+//             <div className="mb-3">
+//               <label className="fw-bold">Color:</label>
+
+//               <div className="d-flex gap-2">
+//                 {availableColors.map((color, i) => {
+//                   const isObject = typeof color === "object";
+//                   const name = isObject ? color.name : color;
+//                   const hex = !isObject ? colorMap[name.toLowerCase()] : null;
+//                   const img = isObject ? color.img : null;
+
+//                   return (
+//                     <div
+//                       key={i}
+//                       onClick={() => {
+//                         setSelectedColor(name);
+//                         setErrorColor(false);
+//                       }}
+//                       title={name}
+//                       style={{
+//                         width: 32,
+//                         height: 32,
+//                         borderRadius: "50%",
+//                         cursor: "pointer",
+//                         backgroundColor: img ? "transparent" : hex,
+//                         backgroundImage: img ? `url(${img})` : "none",
+//                         backgroundSize: "cover",
+//                         border:
+//                           selectedColor === name
+//                             ? "3px solid black"
+//                             : "1px solid #ccc",
+//                       }}
+//                     />
+//                   );
+//                 })}
+//               </div>
+
+//               {selectedColor && (
+//                 <small className="d-block mt-1">
+//                   Color seleccionado: <b>{selectedColor}</b>
+//                 </small>
+//               )}
+
+//               {errorColor && (
+//                 <small className="text-danger">
+//                   Debes seleccionar un color
+//                 </small>
+//               )}
+//             </div>
 //           )}
 
+//           {/* TEXTO PERSONALIZADO */}
+//           {detail.customText && (
+//             <div className="mb-3">
+//               <label className="fw-bold">Apellido / Apodo:</label>
+
+//               <input
+//                 type="text"
+//                 className="form-control"
+//                 value={customText}
+//                 placeholder="Ej: González"
+//                 onChange={(e) => {
+//                   setCustomText(e.target.value);
+//                   setErrorText(false);
+//                 }}
+//               />
+
+//               {errorText && (
+//                 <small className="text-danger">Debes ingresar un texto</small>
+//               )}
+//             </div>
+//           )}
+
+//           {/* STOCK + BOTÓN */}
+//           <ItemCount stock={stockDisponible} onAdd={onAdd} />
+
+//           {/* ALERTA */}
 //           {showAlert && (
 //             <div className="alert alert-success mt-3">
-//               Agregaste {selectedQuantity} unidades de {detail.name} ({selectedOption?.name}) al carrito
+//               Agregaste {selectedQuantity} unidad(es) de <b>{detail.name}</b>
+//               {selectedOption ? ` (${selectedOption.name})` : ""}
+//               {selectedColor ? ` - ${selectedColor}` : ""}
+//               {customText ? ` - "${customText}"` : ""}
 //             </div>
 //           )}
 
@@ -175,47 +319,94 @@
 //           </div>
 //         </div>
 //       </div>
-//     </div>
+     
+//   </div>
 //   );
 // };
-
 // export default ItemDetail;
 
 import { useState, useContext, useEffect } from "react";
 import ItemCount from "./ItemCount";
+import { FaCheck } from "react-icons/fa6";
+import { CartContext } from "../context/CartContext";
 import { LiaTruckSolid } from "react-icons/lia";
 import { RiSecurePaymentLine } from "react-icons/ri";
 import { MdOutlinePublishedWithChanges } from "react-icons/md";
-import { FaCheck } from "react-icons/fa6";
-import { Link } from "react-router-dom";
-import { CartContext } from "../context/CartContext";
 
 const ItemDetail = ({ detail }) => {
-  const { addItem, itemQty, cart } = useContext(CartContext);
+  const { addItem, itemQty } = useContext(CartContext);
 
   const [selectedImage, setSelectedImage] = useState("");
-  const [selectedOption, setSelectedOption] = useState(null); // opción elegida
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedColor, setSelectedColor] = useState(null);
+  const [customText, setCustomText] = useState("");
+
   const [selectedQuantity, setSelectedQuantity] = useState(0);
   const [showAlert, setShowAlert] = useState(false);
 
+  const [errorOption, setErrorOption] = useState(false);
+  const [errorColor, setErrorColor] = useState(false);
+  const [errorText, setErrorText] = useState(false);
+
+  const hasOptions = detail.options?.length > 0;
+
+  const colorMap = {
+    rojo: "#ff0000",
+    negro: "#000000",
+    blanco: "#ffffff",
+    azul: "#0000ff",
+    verde: "#00ff00",
+    amarillo: "#ffff00",
+    rosa: "#ffc0cb",
+    rosado: "#ffc0cb",
+    violeta: "#8a2be2",
+    naranja: "#ffa500",
+    gris: "#808080",
+  };
+
   useEffect(() => {
     setSelectedImage(detail.img);
-    // Por defecto la primera opción si existen
-    if (detail.options?.length > 0) {
-      setSelectedOption(detail.options[0]);
-      if (detail.options[0].img) setSelectedImage(detail.options[0].img);
-    }
+    setSelectedOption(null);
+    setSelectedColor(null);
+    setCustomText("");
   }, [detail]);
 
   const stockDisponible = detail.stock - itemQty(detail.id);
 
   const onAdd = (cantidad) => {
-    if (!selectedOption) return alert("Selecciona una opción primero");
+    let hasError = false;
+
+    if (hasOptions && !selectedOption) {
+      setErrorOption(true);
+      hasError = true;
+    } else {
+      setErrorOption(false);
+    }
+
+    const availableColors = selectedOption?.colors || detail.colors || [];
+
+    if (availableColors.length > 0 && !selectedColor) {
+      setErrorColor(true);
+      hasError = true;
+    } else {
+      setErrorColor(false);
+    }
+
+    if (detail.customText && !customText.trim()) {
+      setErrorText(true);
+      hasError = true;
+    } else {
+      setErrorText(false);
+    }
+
+    if (hasError) return;
 
     const itemToAdd = {
       ...detail,
       selectedOption,
+      selectedColor,
       selectedImg: selectedImage,
+      customText: customText.trim(),
     };
 
     addItem(itemToAdd, cantidad);
@@ -225,16 +416,27 @@ const ItemDetail = ({ detail }) => {
 
   const handleOptionChange = (option) => {
     setSelectedOption(option);
-    if (option.img) setSelectedImage(option.img);
+    setErrorOption(false);
+
+    if (option?.img) setSelectedImage(option.img);
+
+    setSelectedColor(null);
+    setErrorColor(false);
   };
+
+  const availableColors =
+    selectedOption?.colors || detail.colors || [];
 
   return (
     <div className="container py-5">
       <div className="row g-5">
-        {/* Imagen del producto */}
+
+        {/* IZQUIERDA */}
         <div className="col-md-6">
+
+          {/* IMAGEN PRINCIPAL */}
           <div
-            className="border rounded d-flex align-items-center justify-content-center mb-3 overflow-hidden"
+            className="border rounded d-flex align-items-center justify-content-center mb-3"
             style={{ height: "450px", backgroundColor: "#f5f5f5" }}
           >
             <img
@@ -245,7 +447,7 @@ const ItemDetail = ({ detail }) => {
             />
           </div>
 
-          {/* Miniaturas */}
+          {/* MINIATURAS */}
           <div className="d-flex gap-2 flex-wrap">
             {[detail.img, ...(detail.images || [])].map((foto, index) => (
               <img
@@ -269,8 +471,9 @@ const ItemDetail = ({ detail }) => {
           </div>
         </div>
 
-        {/* Información del producto */}
+        {/* DERECHA */}
         <div className="col-md-6">
+
           <p className="text-uppercase text-muted small mb-2">
             {detail.category}
           </p>
@@ -291,12 +494,11 @@ const ItemDetail = ({ detail }) => {
             </p>
           )}
 
-          {/* Características */}
-          <h6 className="fw-bold mt-4">Características</h6>
+          <h6 className="fw-bold mt-3">Características</h6>
           <ul className="list-unstyled">
-            {detail.features?.map((feature, index) => (
-              <li key={index} className="mb-1">
-                <FaCheck /> {feature}
+            {detail.features?.map((f, i) => (
+              <li key={i}>
+                <FaCheck /> {f}
               </li>
             ))}
           </ul>
@@ -305,10 +507,11 @@ const ItemDetail = ({ detail }) => {
             ● En stock ({stockDisponible} disponibles)
           </p>
 
-          {/* Selector de opciones */}
-          {detail.options?.length > 0 && (
+          {/* MODELO */}
+          {hasOptions && (
             <div className="mb-3">
-              <label className="form-label fw-bold">Elige una opción:</label>
+              <label className="fw-bold">Modelo:</label>
+
               <select
                 className="form-select"
                 value={selectedOption?.name || ""}
@@ -319,40 +522,121 @@ const ItemDetail = ({ detail }) => {
                   handleOptionChange(opt);
                 }}
               >
-                {detail.options.map((option, index) => (
-                  <option key={index} value={option.name}>
-                    {option.name}
+                <option value="">Seleccionar modelo</option>
+                {detail.options.map((opt, i) => (
+                  <option key={i} value={opt.name}>
+                    {opt.name}
                   </option>
                 ))}
               </select>
+
+              {errorOption && (
+                <small className="text-danger">
+                  Debes seleccionar un modelo
+                </small>
+              )}
             </div>
           )}
 
-          {/* Contador de cantidad */}
+          {/* COLORES */}
+          {availableColors.length > 0 && (
+            <div className="mb-3">
+              <label className="fw-bold">Color:</label>
+
+              <div className="d-flex gap-2">
+                {availableColors.map((color, i) => {
+                  const isObject = typeof color === "object";
+                  const name = isObject ? color.name : color;
+                  const hex = !isObject
+                    ? colorMap[name.toLowerCase()]
+                    : null;
+                  const img = isObject ? color.img : null;
+
+                  return (
+                    <div
+                      key={i}
+                      onClick={() => {
+                        setSelectedColor(name);
+                        setErrorColor(false);
+                      }}
+                      title={name}
+                      style={{
+                        width: 32,
+                        height: 32,
+                        borderRadius: "50%",
+                        cursor: "pointer",
+                        backgroundColor: img ? "transparent" : hex,
+                        backgroundImage: img ? `url(${img})` : "none",
+                        backgroundSize: "cover",
+                        border:
+                          selectedColor === name
+                            ? "3px solid black"
+                            : "1px solid #ccc",
+                      }}
+                    />
+                  );
+                })}
+              </div>
+
+              {errorColor && (
+                <small className="text-danger">
+                  Debes seleccionar un color
+                </small>
+              )}
+            </div>
+          )}
+
+          {/* TEXTO */}
+          {detail.customText && (
+            <div className="mb-3">
+              <label className="fw-bold">Apellido / Apodo:</label>
+
+              <input
+                type="text"
+                className="form-control"
+                value={customText}
+                onChange={(e) => {
+                  setCustomText(e.target.value);
+                  setErrorText(false);
+                }}
+              />
+
+              {errorText && (
+                <small className="text-danger">
+                  Debes ingresar un texto
+                </small>
+              )}
+            </div>
+          )}
+
+          {/* CANTIDAD */}
           <ItemCount stock={stockDisponible} onAdd={onAdd} />
 
-          {/* Alerta */}
+          {/* ALERTA */}
           {showAlert && (
             <div className="alert alert-success mt-3">
-              Agregaste {selectedQuantity} unidades de {detail.name} (
-              {selectedOption?.name}) al carrito
+              Agregaste {selectedQuantity} unidad(es) de{" "}
+              <b>{detail.name}</b>
+              {selectedOption && ` (${selectedOption.name})`}
+              {selectedColor && ` - ${selectedColor}`}
+              {customText && ` - "${customText}"`}
             </div>
           )}
 
           <hr className="mt-4" />
 
-          {/* Beneficios */}
+          {/* BENEFICIOS */}
           <div className="d-flex justify-content-between text-center small mt-3">
             <div>
-              <LiaTruckSolid fontSize={"1.1rem"} />
+              <LiaTruckSolid />
               <br /> Envío rápido
             </div>
             <div>
-              <RiSecurePaymentLine fontSize={"1.1rem"} />
+              <RiSecurePaymentLine />
               <br /> Pago seguro
             </div>
             <div>
-              <MdOutlinePublishedWithChanges fontSize={"1.1rem"} />
+              <MdOutlinePublishedWithChanges />
               <br /> Cambios fáciles
             </div>
           </div>

@@ -30,8 +30,8 @@ const NavBar = () => {
             </Nav.Link>
 
             <NavDropdown title="Productos" id="productos-dropdown">
-              <NavDropdown.Item as={NavLink} to="/category/stickers">
-                Stickers
+              <NavDropdown.Item as={NavLink} to="/category/vinilos">
+                Vinilos
               </NavDropdown.Item>
               <NavDropdown.Item as={NavLink} to="/category/souvenirs-y-regalos">
                 Souvenirs y regalos

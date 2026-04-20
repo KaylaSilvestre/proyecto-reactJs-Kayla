@@ -20,6 +20,7 @@ function App() {
     <BrowserRouter>
       <CartProvider>
         <NavBar />
+
         <Routes>
           <Route path="/" element={<ItemListContainer mensaje={<Hero />} />} />
           <Route
