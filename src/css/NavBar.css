@@ -2,3 +2,25 @@
   background-color: transparent !important;
   color: #ff6600 !important;
 }
+
+/* Saca el borde feo del botón hamburguesa */
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+.brand-logo {
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+}
+
+/* Desktop */
+@media (min-width: 992px) {
+  .brand-logo {
+    font-size: 20px;
+  }
+}

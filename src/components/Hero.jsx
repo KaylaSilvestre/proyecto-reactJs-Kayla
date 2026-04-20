@@ -14,7 +14,7 @@ const Hero = () => {
 
         <p className="hero-subtitle">
           Grabados personalizados y creaciones únicas que transforman
-          <br />
+          <br className="d-none d-lg-block" />
           objetos comunes en recuerdos especiales
         </p>
       </Container>

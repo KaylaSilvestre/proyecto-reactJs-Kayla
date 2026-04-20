@@ -9,22 +9,35 @@ const NavBar = () => {
       expand="lg"
       bg="light"
       variant="light"
-      className="bg-white border-bottom"
+      className="bg-white border-bottom py-2"
     >
-      <Container>
-        <Navbar.Brand as={NavLink} to="/">
-          <span className="text-2xl font-bold tracking-tight text-foreground">
+      <Container className="px-3">
+        {/* MOBILE: toggle + logo */}
+        <div className="d-flex align-items-center gap-2 d-lg-none">
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
+          <Navbar.Brand as={NavLink} to="/" className="m-0 brand-logo">
             HECHO PA'MI
-          </span>
+          </Navbar.Brand>
+        </div>
+
+        {/* DESKTOP: logo izquierda */}
+        <Navbar.Brand
+          as={NavLink}
+          to="/"
+          className="d-none d-lg-block m-0 brand-logo"
+        >
+          HECHO PA'MI
         </Navbar.Brand>
 
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        {/* MOBILE: carrito derecha */}
+        <div className="d-flex align-items-center d-lg-none">
+          <CartWidget />
+        </div>
 
-        <Navbar.Collapse
-          id="basic-navbar-nav"
-          className="justify-content-center "
-        >
-          <Nav className="d-flex gap-4 fw-bold">
+        {/* MENÚ */}
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mx-auto gap-4 fw-bold text-center text-lg-start">
             <Nav.Link as={NavLink} to="/" className="text-dark">
               Inicio
             </Nav.Link>
@@ -48,11 +61,12 @@ const NavBar = () => {
               Contacto
             </Nav.Link>
           </Nav>
-        </Navbar.Collapse>
 
-        <Nav>
-          <CartWidget />
-        </Nav>
+          {/* DESKTOP: carrito derecha */}
+          <Nav className="d-none d-lg-flex">
+            <CartWidget />
+          </Nav>
+        </Navbar.Collapse>
       </Container>
     </Navbar>
   );

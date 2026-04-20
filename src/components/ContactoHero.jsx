@@ -10,10 +10,12 @@ const ContactoHero = () => {
         </p>
         <h1 className="hero-category-title mb-4">Contacto</h1>
         <p className="hero-description mt-1" style={{ textTransform: "none" }}>
-          ¿Tienes preguntas sobre nuestros productos personalizados? <br />
-          Nos encantaría saber de ti. Envíanos un mensaje y te <br />
-          responderemos lo antes posible.
-        </p>
+  ¿Tienes preguntas sobre nuestros productos personalizados?
+  <br className="d-none d-lg-block" />
+  Nos encantaría saber de ti. Envíanos un mensaje y te
+  <br className="d-none d-lg-block" />
+  responderemos lo antes posible.
+</p>
       </Container>
     </section>
   );
